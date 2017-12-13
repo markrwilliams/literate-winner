@@ -44,8 +44,6 @@ class MyFactory(Factory):
 
     def __init__(self):
         log.msg('MyFactory.__init__()')
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(self.init())
 
     async def init(self):
         self.mysql_pool = await aiomysql.create_pool(
@@ -63,6 +61,7 @@ class MyFactory(Factory):
 if __name__ == '__main__':
     log.startLogging(sys.stderr)
     f = MyFactory()
+    asyncio.ensure_future(f.init())
     reactor.listenTCP(23456, f)
     log.msg('starting reactor...')
     reactor.run()
