@@ -17,7 +17,7 @@ class MyProtocol(Protocol):
     def connectionMade(self):
         log.msg('connectionMade')
 
-        d = defer.ensureDeferred(self.testDb())
+        d = defer.Deferred.fromFuture(asyncio.ensure_future(self.testDb()))
         d.addErrback(self.dFail)
         d.addCallback(self.dCall)
 
