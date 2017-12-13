@@ -1,5 +1,6 @@
+import asyncio
 from twisted.internet import asyncioreactor
-asyncioreactor.install()
+asyncioreactor.install(asyncio.get_event_loop())
 
 from twisted.internet.protocol import Protocol, Factory
 from twisted.internet import reactor, defer
@@ -7,7 +8,6 @@ from twisted.python import log
 
 import sys
 import os
-import asyncio
 import aiomysql
 
 from mypackage.something import Something
